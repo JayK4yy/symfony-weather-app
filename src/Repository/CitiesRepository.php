@@ -21,6 +21,19 @@ class CitiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Cities::class);
     }
 
+    public function findByCityName($country, $name)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->where('c.name = :cityName')
+            ->setParameter('cityName', $name)
+            ->andWhere('c.country = :country')
+            ->setParameter('country', $country);
+
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
+    }
+
     public function save(Cities $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);

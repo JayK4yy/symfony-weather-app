@@ -24,10 +24,10 @@ class WeatherRepository extends ServiceEntityRepository
 
     public function findByCity(Cities $city)
     {
-        $qb = $this->createQueryBuilder('m');
-        $qb->where('m.city = :city')    //TODO sprawdzić
+        $qb = $this->createQueryBuilder('w');
+        $qb->where('w.city = :city')
             ->setParameter('city', $city)
-            ->andWhere('m.date > :now')
+            ->andWhere('w.date > :now')
             ->setParameter('now', date('Y-m-d'));
 
         $query = $qb->getQuery();
