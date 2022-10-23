@@ -36,6 +36,11 @@ class Weather
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: '0', nullable: true)]
     private ?string $wind_speed = null;
 
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

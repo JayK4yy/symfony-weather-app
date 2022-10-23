@@ -1,0 +1,22 @@
+App\Entity\Cities:
+  properties:
+    lat:
+      - Range:
+          groups: [ edit, new ]
+          min: -90
+          max: 90
+      - NotBlank: ~
+    lon:
+      - Range:
+          groups: [ edit, new ]
+          min: -180
+          max: 180
+      - NotBlank: ~
+
+App\Entity\Weather:
+  properties:
+    rain_prob:
+      - Range:
+          groups: [ edit, new ]
+          min: 0
+          max: 100

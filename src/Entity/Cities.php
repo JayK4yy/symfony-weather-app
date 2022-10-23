@@ -20,10 +20,10 @@ class Cities
     #[ORM\Column(length: 2)]
     private ?string $country = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 8)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7)]
     private ?string $lat = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 8)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7)]
     private ?string $lon = null;
 
     public function getId(): ?int
@@ -77,5 +77,10 @@ class Cities
         $this->lon = $lon;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }

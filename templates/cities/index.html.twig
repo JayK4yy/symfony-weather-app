@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cities index{% endblock %}
+
+{% block body %}
+    <h1>Cities index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Lat</th>
+                <th>Lon</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for city in cities %}
+            <tr>
+                <td>{{ city.id }}</td>
+                <td>{{ city.name }}</td>
+                <td>{{ city.country }}</td>
+                <td>{{ city.lat }}</td>
+                <td>{{ city.lon }}</td>
+                <td>
+                    <a href="{{ path('app_cities_show', {'id': city.id}) }}">show</a>
+                    <a href="{{ path('app_cities_edit', {'id': city.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cities_new') }}">Create new</a>
+    <a href="{{ path('app_weather_controller_crud_index') }}">Go to WEATHER</a>
+{% endblock %}
