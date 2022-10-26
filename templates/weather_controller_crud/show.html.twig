@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Weather{% endblock %}
+{% block pageTitle %}Weather details{% endblock %}
 
 {% block body %}
-    <h1>Weather</h1>
 
-    <table class="table">
-        <tbody>
+    <div class="px-3">
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ weather.id }}</td>
@@ -39,12 +40,27 @@
                 <th>Wind_speed</th>
                 <td>{{ weather.windSpeed }} km/h</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_weather_controller_crud_index') }}">back to list</a>
+        <div class="d-flex">
+            <a class="text-decoration-none" href="{{ path('app_weather_controller_crud_index') }}">
+                <button class="btn btn-sm btn-outline-dark ms-2">Back to list</button>
+            </a>
 
-    <a href="{{ path('app_weather_controller_crud_edit', {'id': weather.id}) }}">edit</a>
+            {% if is_granted('ROLE_WEATHER_CRUD_EDIT') %}
+                <a class="text-decoration-none" href="{{ path('app_weather_controller_crud_edit', {'id': weather.id}) }}">
+                    <button class="btn btn-sm btn-outline-dark ms-2">Edit</button>
+                </a>
+            {% endif %}
 
-    {{ include('weather_controller_crud/_delete_form.html.twig') }}
+            {% if is_granted('ROLE_WEATHER_CRUD_DELETE') %}
+                {{ include('weather_controller_crud/_delete_form.html.twig') }}
+            {% endif %}
+        </div>
+
+
+    </div>
+
+
 {% endblock %}

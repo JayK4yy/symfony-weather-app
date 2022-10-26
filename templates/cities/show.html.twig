@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Cities{% endblock %}
+{% block pageTitle %}City details{% endblock %}
 
 {% block body %}
-    <h1>Cities</h1>
-
-    <table class="table">
-        <tbody>
+    <div class="px-3">
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ city.id }}</td>
@@ -27,12 +27,26 @@
                 <th>Lon</th>
                 <td>{{ city.lon }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_cities_index') }}">back to list</a>
+        <div class="d-flex">
+            <a class="text-decoration-none" href="{{ path('app_cities_index') }}">
+                <button class="btn btn-sm btn-outline-dark ms-2">Back to list</button>
+            </a>
 
-    <a href="{{ path('app_cities_edit', {'id': city.id}) }}">edit</a>
+            {% if is_granted('ROLE_CITY_CRUD_EDIT') %}
+                <a class="text-decoration-none" href="{{ path('app_cities_edit', {'id': city.id}) }}">
+                    <button class="btn btn-sm btn-outline-dark ms-2">Edit</button>
+                </a>
+            {% endif %}
 
-    {{ include('cities/_delete_form.html.twig') }}
+            {% if is_granted('ROLE_CITY_CRUD_DELETE') %}
+                {{ include('cities/_delete_form.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+
+
+
 {% endblock %}

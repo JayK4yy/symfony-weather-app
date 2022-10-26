@@ -1,42 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cities index{% endblock %}
+{% block title %}Cities{% endblock %}
+{% block pageTitle %}Cities List{% endblock %}
 
 {% block body %}
-    <h1>Cities index</h1>
+{#    <h1 class="mb-0">Cities index</h1>#}
 
-    <table class="table">
-        <thead>
+    <div class="px-3">
+        <table class="table">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Country</th>
-                <th>Lat</th>
-                <th>Lon</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for city in cities %}
-            <tr>
-                <td>{{ city.id }}</td>
-                <td>{{ city.name }}</td>
-                <td>{{ city.country }}</td>
-                <td>{{ city.lat }}</td>
-                <td>{{ city.lon }}</td>
-                <td>
-                    <a href="{{ path('app_cities_show', {'id': city.id}) }}">show</a>
-                    <a href="{{ path('app_cities_edit', {'id': city.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for city in cities %}
+                <tr>
+                    <td>{{ city.id }}</td>
+                    <td>{{ city.name }}</td>
+                    <td>{{ city.country }}</td>
+                    <td>{{ city.lat }}</td>
+                    <td>{{ city.lon }}</td>
+                    <td>
+                        <a href="{{ path('app_cities_show', {'id': city.id}) }}">show</a>
 
-    <a href="{{ path('app_cities_new') }}">Create new</a>
-    <a href="{{ path('app_weather_controller_crud_index') }}">Go to WEATHER</a>
+                        {% if is_granted('ROLE_CITY_CRUD_EDIT') %}
+                            <a href="{{ path('app_cities_edit', {'id': city.id}) }}">edit</a>
+                        {% endif %}
+
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% if is_granted('ROLE_CITY_CRUD_NEW') %}
+            <a class="text-decoration-none" href="{{ path('app_cities_new') }}">
+                <button class="btn btn-sm btn-outline-dark ms-2">Create new</button>
+            </a>
+        {% endif %}
+
+        <a class="text-decoration-none" href="{{ path('app_weather_controller_crud_index') }}">
+            <button class="btn btn-sm btn-outline-dark ms-2">Go to WEATHER</button>
+        </a>
+    </div>
+
+
+
 {% endblock %}

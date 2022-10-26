@@ -16,6 +16,8 @@ class CitiesController extends AbstractController
     #[Route('/', name: 'app_cities_index', methods: ['GET'])]
     public function index(CitiesRepository $citiesRepository): Response
     {
+//        $this->denyAccessUnlessGranted('ROLE_CITIES_CRUD_INDEX');
+
         return $this->render('cities/index.html.twig', [
             'cities' => $citiesRepository->findAll(),
         ]);
@@ -24,6 +26,8 @@ class CitiesController extends AbstractController
     #[Route('/new', name: 'app_cities_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CitiesRepository $citiesRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_CITY_CRUD_NEW');
+
         $city = new Cities();
         $form = $this->createForm(CitiesType::class, $city, [
             'validation_groups' => ['new']
@@ -45,6 +49,8 @@ class CitiesController extends AbstractController
     #[Route('/{id}', name: 'app_cities_show', methods: ['GET'])]
     public function show(Cities $city): Response
     {
+//        $this->denyAccessUnlessGranted('ROLE_CITY_CRUD_SHOW');
+
         return $this->render('cities/show.html.twig', [
             'city' => $city,
         ]);
@@ -53,6 +59,8 @@ class CitiesController extends AbstractController
     #[Route('/{id}/edit', name: 'app_cities_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Cities $city, CitiesRepository $citiesRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_CITY_CRUD_EDIT');
+
         $form = $this->createForm(CitiesType::class, $city, [
             'validation_groups' => ['edit']
         ]);
@@ -73,6 +81,8 @@ class CitiesController extends AbstractController
     #[Route('/{id}', name: 'app_cities_delete', methods: ['POST'])]
     public function delete(Request $request, Cities $city, CitiesRepository $citiesRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_CITY_CRUD_DELETE');
+
         if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {
             $citiesRepository->remove($city, true);
         }
