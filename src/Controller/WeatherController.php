@@ -1,19 +1,18 @@
-<?php       // src/Controller/WeatherController.php
+<?php
 
 namespace App\Controller;
 
 use App\Entity\Cities;
 use App\Repository\CitiesRepository;
-use App\Repository\WeatherRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\WeatherUtil;
 
 class WeatherController extends AbstractController
 {
-//    #[Route('/weather', name: 'app_weather')]
-    public function cityAction(Cities $city, WeatherRepository $weatherRepository): Response
+    public function cityAction(Cities $city, WeatherUtil $weatherUtil): Response
     {
-        $weather = $weatherRepository->findByCity($city);
+        $weather = $weatherUtil->getWeatherForLocation($city);
 
         return $this->render('weather/city.html.twig', [
             'city' => $city,
@@ -21,20 +20,14 @@ class WeatherController extends AbstractController
         ]);
     }
 
-    public function cityNameAction(
-        $cityName,
-        $country,
-        WeatherRepository $weatherRepository,
-        CitiesRepository $citiesRepository): Response
+    public function cityNameAction($cityName, $country, CitiesRepository $citiesRepository, WeatherUtil $weatherUtil): Response
     {
-        $cities = $citiesRepository->findByCityName($country, $cityName);
-
         try {
-            $city = $cities[0];
-            $weather = $weatherRepository->findByCity($cities[0]);
+            $cities = $citiesRepository->findByCityName($country, $cityName);
+            $weather = $weatherUtil->getWeatherForCountryAndCity($country, $cityName);
 
             return $this->render('weather/city.html.twig', [
-                'city' => $city,
+                'city' => $cities[0],
                 'weather' => $weather,
             ]);
 
@@ -43,7 +36,6 @@ class WeatherController extends AbstractController
                 'city' => $cityName,
                 'country' => $country
             ]);
-
         }
     }
 }

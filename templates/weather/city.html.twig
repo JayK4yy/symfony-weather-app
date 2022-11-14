@@ -1,20 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Weather in {{ city.name }}, {{ city.country }}{% endblock %}
+{% block pageTitle %}{{ city.name }}, {{ city.country }}{% endblock %}
 
 {% block body %}
     <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+        .col {
+            border: 1px solid var(--bs-card-border-color);
+            border-radius: var(--bs-card-inner-border-radius);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            padding: 10px 0;
+        }
+
+        .col span:first-child {
+            font-size: 12px;
+        }
     </style>
 
-    <div class="example-wrapper">
-        <h1>{{ city.name }}, {{ city.country }}</h1>
+    <div class="container mt-3">
 
-        <ul>
-            {% for singleWeather in weather %}
-                <li>{{ singleWeather.date|date('d.m.Y') }}: {{ singleWeather.tempDay }}&deg;C</li>
-            {% endfor %}
-        </ul>
+        {% for singleWeather in weather %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    Pogoda - {{ singleWeather.date|date('d.m.Y') }}
+                </div>
+                <div class="card-body px-1 py-2">
+                    <div class="row gap-2 mx-2 position-relative">
+                        <div class="col">
+                            <span>Dzień</span>
+                            <span>{{ singleWeather.tempDay }}&deg;C</span>
+                        </div>
+                        <div class="col">
+                            <span>Noc</span>
+                            <span>{{ singleWeather.tempNight }}&deg;C</span>
+                        </div>
+                        <div class="col">
+                            <span>Opady</span>
+                            <span>{{ singleWeather.rainProb }}%</span>
+                        </div>
+                        <div class="col">
+                            <span>Wiatr</span>
+                            <span>{{ singleWeather.windSpeed }}km/h</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
     </div>
 {% endblock %}
