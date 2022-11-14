@@ -129,4 +129,16 @@ class Weather
 
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            $this->id,
+            $this->date->format('d-m-Y'),
+            $this->temp_night,
+            $this->temp_day,
+            $this->rain_prob,
+            $this->wind_speed
+        ];
+    }
 }
