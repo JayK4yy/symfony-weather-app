@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\WeatherRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use PHPUnit\Util\Json;
 
 #[ORM\Entity(repositoryClass: WeatherRepository::class)]
 class Weather
@@ -133,12 +134,17 @@ class Weather
     public function toArray(): array
     {
         return [
-            $this->id,
-            $this->date->format('d-m-Y'),
-            $this->temp_night,
-            $this->temp_day,
-            $this->rain_prob,
-            $this->wind_speed
+            "id" => $this->id,
+            "date" => $this->date->format('d-m-Y'),
+            "temp_night" => $this->temp_night,
+            "temp_day" => $this->temp_day,
+            "rain_prob" => $this->rain_prob,
+            "wind_speed" => $this->wind_speed
         ];
+    }
+
+    public function tempToFahrenheit($temp): float
+    {
+        return round((floatval($temp) * 9/5) + 32, 1);
     }
 }

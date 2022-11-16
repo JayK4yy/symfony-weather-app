@@ -1,0 +1,4 @@
+{% for weather in weatherArray %}
+{{ weather['id'] }},{{ weather['date']|format('d-m-Y') }},{{ weather['temp_night'] }},{{ weather['temp_day'] }},{{ weather['rain_prob'] }},{{ weather['wind_speed'] }}
+{% endfor %}
+

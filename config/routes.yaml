@@ -13,6 +13,10 @@ weather_in_city_name:
   path: /weather/{country}/{cityName}
   controller: App\Controller\WeatherController:cityNameAction
 
+weather_api_controller:
+  path: /weather/api
+  controller: App\Controller\WeatherApiController:getWeatherAction
+
 app_logout:
   path: /logout
   methods: GET

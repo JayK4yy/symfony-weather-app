@@ -1,0 +1,16 @@
+{
+    "country": "{{ country }}",
+    "city": "{{ city }}",
+    "weather": [
+        {% for weather in weatherArray %}
+        {
+            "id": "{{ weather['id'] }}",
+            "date": "{{ weather['date']|format('d-m-Y') }}",
+            "temp_night": "{{ weather['temp_night'] }}",
+            "temp_day": "{{ weather['temp_day'] }}",
+            "rain_prob": "{{ weather['rain_prob'] }}",
+            "wind_speed": "{{ weather['wind_speed'] }}"
+        },
+        {% endfor %}
+    ]
+}
